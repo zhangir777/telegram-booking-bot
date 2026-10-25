@@ -11,7 +11,7 @@ from aiogram.types import CallbackQuery, Message, ReplyKeyboardRemove
 from bot.config import settings
 from bot.db.models import Booking, Master, Service, User
 from bot.db.session import Session
-from bot.i18n import booking_details, t
+from bot.i18n import booking_details, money, t, title
 from bot.keyboards import builders as kb
 from bot.keyboards.callbacks import (
     BookingCb,
@@ -94,8 +94,8 @@ async def prices(call: CallbackQuery, lang: str):
         t(
             lang,
             "price_line",
-            name=x.name,
-            price=f"{x.price:,}".replace(",", " "),
+            name=title(x, lang),
+            price=money(lang, x.price),
             duration=x.duration_min,
         )
         for x in services

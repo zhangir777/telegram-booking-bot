@@ -16,18 +16,27 @@ from bot.services.booking import available_slots
 WEEK = {str(d): ["10:00", "20:00"] for d in range(6)}  # Mon-Sat
 
 MASTERS = [
-    Master(name="Айгерим", schedule=WEEK, break_start="14:00", break_end="15:00"),
-    Master(name="Дана", schedule={str(d): ["11:00", "20:00"] for d in (1, 2, 3, 4, 5)}),
-    Master(name="Арман (барбер)", schedule=WEEK, break_start="13:00", break_end="14:00"),
-]
+    Master(name="Айгерим", names={"en": "Aigerim"},
+           schedule=WEEK, break_start="14:00", break_end="15:00"),
+    Master(name="Дана", names={"en": "Dana"},
+           schedule={str(d): ["11:00", "20:00"] for d in (1, 2, 3, 4, 5)}),
+    Master(name="Арман (барбер)", names={"en": "Arman (barber)"},
+           schedule=WEEK, break_start="13:00", break_end="14:00"),
+]  # fmt: skip
+# names: translations shown to clients by language (Kazakh needs review by a native speaker)
 SERVICES = [
-    Service(name="Женская стрижка", price=8000, duration_min=60),
-    Service(name="Мужская стрижка", price=5000, duration_min=45),
-    Service(name="Окрашивание", price=20000, duration_min=120),
-    Service(name="Маникюр", price=6000, duration_min=60),
-    Service(name="Укладка", price=7000, duration_min=45),
-    Service(name="Борода", price=3000, duration_min=30),
-]
+    Service(name="Женская стрижка", names={"kk": "Әйелдер шаш қиюы", "en": "Women's haircut"},
+            price=8000, duration_min=60),
+    Service(name="Мужская стрижка", names={"kk": "Ерлер шаш қиюы", "en": "Men's haircut"},
+            price=5000, duration_min=45),
+    Service(name="Окрашивание", names={"kk": "Шаш бояу", "en": "Hair coloring"},
+            price=20000, duration_min=120),
+    Service(name="Маникюр", names={"en": "Manicure"}, price=6000, duration_min=60),
+    Service(name="Укладка", names={"kk": "Шаш сәндеу", "en": "Styling"},
+            price=7000, duration_min=45),
+    Service(name="Борода", names={"kk": "Сақал", "en": "Beard trim"},
+            price=3000, duration_min=30),
+]  # fmt: skip
 CLIENTS = [
     User(id=1001, name="Demo Client 1", phone="+77000000001", lang="ru"),
     User(id=1002, name="Demo Client 2", phone="+77000000002", lang="kk"),

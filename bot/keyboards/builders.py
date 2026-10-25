@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 from aiogram.types import InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from bot.i18n import LANGS, t
+from bot.i18n import LANGS, money, t, title
 
 from .callbacks import (
     BookingCb,
@@ -48,7 +48,7 @@ def services_kb(lang: str, services) -> InlineKeyboardMarkup:
     kb = InlineKeyboardBuilder()
     for s in services:
         kb.button(
-            text=f"{s.name} · {s.price:,} ₸".replace(",", " "),
+            text=f"{title(s, lang)} · {money(lang, s.price)}",
             callback_data=ServiceCb(service_id=s.id),
         )
     kb.button(text=t(lang, "btn_back"), callback_data=MenuCb(action="home"))
@@ -59,7 +59,7 @@ def masters_kb(lang: str, masters) -> InlineKeyboardMarkup:
     kb = InlineKeyboardBuilder()
     kb.button(text=t(lang, "any_master"), callback_data=MasterCb(master_id=0))
     for m in masters:
-        kb.button(text=m.name, callback_data=MasterCb(master_id=m.id))
+        kb.button(text=title(m, lang), callback_data=MasterCb(master_id=m.id))
     kb.button(text=t(lang, "btn_back"), callback_data=MenuCb(action="book"))
     return kb.adjust(1).as_markup()
 

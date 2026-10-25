@@ -24,9 +24,15 @@ def make_engine(url: str = settings.database_url) -> AsyncEngine:
 
 
 async def init_db(engine: AsyncEngine) -> None:
-    """Simple migration strategy: create missing tables (no destructive changes)."""
+    """Simple migration strategy: create missing tables and columns (no destructive changes)."""
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        for table in ("masters", "services") if conn.dialect.name == "sqlite" else ():
+            cols = {row[1] for row in await conn.exec_driver_sql(f"PRAGMA table_info({table})")}
+            if "names" not in cols:
+                await conn.exec_driver_sql(
+                    f"ALTER TABLE {table} ADD COLUMN names JSON DEFAULT '{{}}'"
+                )
 
 
 engine = make_engine()

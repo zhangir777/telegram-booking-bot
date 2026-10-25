@@ -23,6 +23,7 @@ class Master(Base):
     __tablename__ = "masters"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(64))
+    names: Mapped[dict] = mapped_column(JSON, default=dict)  # translations {"kk": ..., "en": ...}
     # {"0": ["10:00", "19:00"], ...} weekday (Mon=0) -> work hours; missing day = day off
     schedule: Mapped[dict] = mapped_column(JSON, default=dict)
     break_start: Mapped[str | None] = mapped_column(String(5))  # "13:00"
@@ -34,6 +35,7 @@ class Service(Base):
     __tablename__ = "services"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(64))
+    names: Mapped[dict] = mapped_column(JSON, default=dict)  # translations {"kk": ..., "en": ...}
     price: Mapped[int]  # tenge
     duration_min: Mapped[int]
     active: Mapped[bool] = mapped_column(default=True)
