@@ -1,0 +1,25 @@
+# Business info shown by the bot. Edit per client; services/masters live in the DB (seed or /admin).
+name: "Demo Beauty Almaty"
+address:
+  ru: "г. Алматы, пр. Абая 10 (демо-адрес)"
+  kk: "Алматы қ., Абай даңғылы 10 (демо мекенжай)"
+  en: "10 Abay Ave, Almaty (demo address)"
+phone: "+7 700 000 00 00"
+hours:
+  ru: "Пн–Сб 10:00–20:00"
+  kk: "Дс–Сб 10:00–20:00"
+  en: "Mon–Sat 10:00–20:00"
+location: {lat: 43.2389, lon: 76.9455}
+faq:
+  ru:
+    - ["Можно ли прийти без записи?", "Да, если есть свободный мастер, но лучше записаться."]
+    - ["Как отменить запись?", "В разделе «Мои записи» — кнопка «Отменить»."]
+    - ["Как оплатить?", "Наличными, картой или переводом Kaspi на месте."]
+  kk:
+    - ["Жазылусыз келуге бола ма?", "Иә, бос шебер болса, бірақ алдын ала жазылған дұрыс."]
+    - ["Жазылудан қалай бас тартамын?", "«Менің жазылуларым» бөлімінде «Бас тарту» батырмасы."]
+    - ["Қалай төлеймін?", "Қолма-қол, картамен немесе Kaspi аударымымен."]
+  en:
+    - ["Can I come without booking?", "Yes, if a specialist is free, but booking is safer."]
+    - ["How do I cancel?", "Open “My bookings” and press “Cancel”."]
+    - ["How can I pay?", "Cash, card or Kaspi transfer on site."]
