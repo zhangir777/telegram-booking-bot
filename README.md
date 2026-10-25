@@ -6,6 +6,15 @@
 
 > **Try the demo:** TODO — link to the demo bot. The demo uses the fictional business “Demo Beauty Almaty”; all names, phones and bookings are made up.
 
+```mermaid
+flowchart LR
+    C([Client]) --> S[Service] --> M[Specialist<br/>or any] --> D[Date<br/>next 14 days] --> T[Free time<br/>only real slots] --> OK[Confirm +<br/>share phone]
+    OK --> B[(Booking)]
+    B --> A[[Owner gets<br/>Telegram notification]]
+    B --> R1[Reminder 24 h] --> R2[Reminder 2 h]
+    B --> MY[My bookings:<br/>cancel / reschedule]
+```
+
 <!-- Screenshots: docs/screenshots/1_menu.png … 5_admin.png -->
 
 ## What your clients get
