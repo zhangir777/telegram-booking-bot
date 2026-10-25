@@ -4,6 +4,8 @@
 
 [![CI](https://github.com/zhangir777/telegram-booking-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/zhangir777/telegram-booking-bot/actions/workflows/ci.yml)
 
+**Hire me:** [Fiverr](https://www.fiverr.com/akhmetov_zhangi) · [Telegram @ZhangirAkhmetov](https://t.me/ZhangirAkhmetov)
+
 > **Try the demo:** TODO — link to the demo bot. The demo uses the fictional business “Demo Beauty Almaty”; all names, phones and bookings are made up.
 
 ```mermaid
