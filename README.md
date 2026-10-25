@@ -15,7 +15,13 @@ flowchart LR
     B --> MY[My bookings:<br/>cancel / reschedule]
 ```
 
-<!-- Screenshots: docs/screenshots/1_menu.png … 5_admin.png -->
+| Menu | Free time | Confirm |
+|---|---|---|
+| ![Main menu](docs/screenshots/1_menu.png) | ![Free time slots](docs/screenshots/2_time.png) | ![Booking confirmation](docs/screenshots/3_confirm.png) |
+| **Reminder** | **Admin panel** | |
+| ![Reminder 24 h before](docs/screenshots/4_reminder.png) | ![Admin panel](docs/screenshots/5_admin.png) | |
+
+*Screenshots from the live demo bot in Telegram Web, demo data.*
 
 ## What your clients get
 - Book in 5 taps: service → specialist (or “any”) → date → free time → confirm
