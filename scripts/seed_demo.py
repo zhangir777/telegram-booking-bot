@@ -23,7 +23,7 @@ MASTERS = [
     Master(name="Арман (барбер)", names={"en": "Arman (barber)"},
            schedule=WEEK, break_start="13:00", break_end="14:00"),
 ]  # fmt: skip
-# names: translations shown to clients by language (Kazakh needs review by a native speaker)
+# names: translations shown to clients by language
 SERVICES = [
     Service(name="Женская стрижка", names={"kk": "Әйелдер шаш қиюы", "en": "Women's haircut"},
             price=8000, duration_min=60),

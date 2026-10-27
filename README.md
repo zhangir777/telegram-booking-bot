@@ -68,7 +68,7 @@ uv run pytest -q              # 34 offline tests, no Telegram needed
 | `bot/services/` | business logic without aiogram: slots, bookings, reminders, export |
 | `bot/handlers/client`, `bot/handlers/admin` | Telegram handlers |
 | `bot/middlewares/` | user language, admin-only access, anti-flood |
-| `bot/locales/*.yaml` | all texts (Kazakh needs review by a native speaker) |
+| `bot/locales/*.yaml` | all texts (Russian, Kazakh, English) |
 | `business.yaml` | name, address, map pin, hours, FAQ — edit per client |
 | `template/` | lightweight FAQ + lead bot for small orders |
 | `deploy/DEPLOY.md` | VPS deploy, auto-restart, daily backups, updates |
