@@ -6,7 +6,7 @@
 
 **Hire me:** [Upwork](https://www.upwork.com/freelancers/~012c68804f9b4d4550) · [Fiverr](https://www.fiverr.com/akhmetov_zhangi) · [Telegram @ZhangirAkhmetov](https://t.me/ZhangirAkhmetov)
 
-> **Try the demo:** TODO — link to the demo bot. The demo uses the fictional business “Demo Beauty Almaty”; all names, phones and bookings are made up.
+> **Try the demo:** [@zhangir_booking_bot](https://t.me/zhangir_booking_bot) (runs when my demo server is on). The demo uses the fictional business “Demo Beauty Almaty”; all names, phones and bookings are made up.
 
 ```mermaid
 flowchart LR
