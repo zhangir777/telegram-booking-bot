@@ -10,7 +10,7 @@
 
 ```mermaid
 flowchart LR
-    C([Client]) --> S[Service] --> M[Specialist<br/>or any] --> D[Date<br/>next 14 days] --> T[Free time<br/>only real slots] --> OK[Confirm +<br/>share phone]
+    C([Client]) --> S[Service] --> M[Specialist<br/>or any] --> D[Date<br/>next 14 days] --> T[Free time<br/>only real slots] --> OK[Confirm +<br/>phone]
     OK --> B[(Booking)]
     B --> A[[Owner gets<br/>Telegram notification]]
     B --> R1[Reminder 24 h] --> R2[Reminder 2 h]
@@ -46,7 +46,7 @@ I need from you: list of services with prices and duration, specialists and thei
 Then: your branding and texts → deploy on a server → you test → launch. Support from 10 000 ₸/month.
 
 ## Privacy
-The bot stores only what is needed: Telegram id, name, phone (shared by the client with a button), language and bookings.
+The bot stores only what is needed: Telegram id, name, phone (shared with a button or typed by the client), language and bookings.
 A client can delete all their data with `/deletemydata`. Data stays on your server (SQLite file), nothing is sent to third parties.
 
 ---
@@ -60,7 +60,7 @@ cp .env.example .env          # BOT_TOKEN from @BotFather, ADMIN_IDS=[your id]
 uv sync
 uv run seed-demo              # optional demo data
 uv run python -m bot.main
-uv run pytest -q              # 34 offline tests, no Telegram needed
+uv run pytest -q              # 44 offline tests, no Telegram needed
 ```
 
 | Path | What |

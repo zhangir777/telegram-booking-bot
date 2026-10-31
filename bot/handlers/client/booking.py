@@ -1,5 +1,6 @@
 """Client side: start, menu, booking flow, my bookings, info screens."""
 
+import re
 from datetime import date, datetime, timedelta
 
 from aiogram import Bot, F, Router
@@ -37,6 +38,23 @@ def now() -> datetime:
     return datetime.now(settings.tz).replace(tzinfo=None)
 
 
+def normalize_phone(raw: str) -> str | None:
+    """Typed phone -> +digits. 8 777 ... and 7 777 ... become +7777...; None if not a phone."""
+    digits = re.sub(r"\D", "", raw)
+    if len(digits) == 11 and digits[0] in "78" and not raw.strip().startswith("+"):
+        return "+7" + digits[1:]
+    if raw.strip().startswith("+") and 10 <= len(digits) <= 15:
+        return "+" + digits
+    return None
+
+
+async def drop_phone_kb(message: Message, state: FSMContext):
+    """Hide the "Share contact" keyboard if the client leaves the phone step."""
+    if await state.get_state() == BookingFlow.phone.state:
+        tmp = await message.answer("…", reply_markup=ReplyKeyboardRemove())
+        await message.bot.delete_message(message.chat.id, tmp.message_id)
+
+
 async def show_menu(target: Message | CallbackQuery, lang: str, text: str | None = None):
     text = text or t(lang, "menu")
     if isinstance(target, CallbackQuery):
@@ -51,12 +69,14 @@ async def show_menu(target: Message | CallbackQuery, lang: str, text: str | None
 
 @router.message(CommandStart())
 async def start(message: Message, state: FSMContext):
+    await drop_phone_kb(message, state)
     await state.clear()
     await message.answer(t("en", "choose_lang"), reply_markup=kb.lang_kb())
 
 
 @router.message(Command("menu"))
 async def menu_cmd(message: Message, state: FSMContext, lang: str):
+    await drop_phone_kb(message, state)
     await state.clear()
     await show_menu(message, lang)
 
@@ -76,6 +96,7 @@ async def set_lang(call: CallbackQuery, callback_data: LangCb, user: User):
 
 @router.callback_query(MenuCb.filter(F.action == "home"))
 async def home(call: CallbackQuery, state: FSMContext, lang: str):
+    await drop_phone_kb(call.message, state)
     await state.clear()
     await show_menu(call, lang)
 
@@ -260,6 +281,7 @@ async def confirm(call: CallbackQuery, state: FSMContext, lang: str, user: User,
     if "start" not in await state.get_data():
         return await home(call, state, lang)
     await call.answer()
+    await call.message.edit_reply_markup(reply_markup=None)  # no double confirm
     if not user.phone:
         await state.set_state(BookingFlow.phone)
         await call.message.answer(t(lang, "ask_phone"), reply_markup=kb.phone_kb(lang))
@@ -267,16 +289,28 @@ async def confirm(call: CallbackQuery, state: FSMContext, lang: str, user: User,
     await finish_booking(call.message, state, lang, user.id, bot)
 
 
+async def save_phone(message: Message, state: FSMContext, lang: str, bot: Bot, phone: str):
+    async with Session() as s:
+        db_user = await s.get(User, message.from_user.id)
+        db_user.phone = phone
+        await s.commit()
+    await message.answer("✅", reply_markup=ReplyKeyboardRemove())
+    await finish_booking(message, state, lang, message.from_user.id, bot)
+
+
 @router.message(BookingFlow.phone, F.contact)
 async def got_phone(message: Message, state: FSMContext, lang: str, bot: Bot):
     if message.contact.user_id != message.from_user.id:
         return await message.answer(t(lang, "ask_phone"), reply_markup=kb.phone_kb(lang))
-    async with Session() as s:
-        db_user = await s.get(User, message.from_user.id)
-        db_user.phone = message.contact.phone_number
-        await s.commit()
-    await message.answer("✅", reply_markup=ReplyKeyboardRemove())
-    await finish_booking(message, state, lang, message.from_user.id, bot)
+    await save_phone(message, state, lang, bot, message.contact.phone_number)
+
+
+@router.message(BookingFlow.phone, F.text)
+async def typed_phone(message: Message, state: FSMContext, lang: str, bot: Bot):
+    phone = normalize_phone(message.text)
+    if not phone:
+        return await message.answer(t(lang, "ask_phone"), reply_markup=kb.phone_kb(lang))
+    await save_phone(message, state, lang, bot, phone)
 
 
 @router.message(BookingFlow.phone)

@@ -13,6 +13,7 @@ from sqlalchemy import select
 from bot.db.models import Service, User
 from bot.db.session import Session
 from bot.handlers.client.booking import now
+from bot.i18n import money
 from bot.keyboards.callbacks import AdminCb
 from bot.services import booking as svc
 from bot.services.export import to_csv, to_xlsx
@@ -125,7 +126,8 @@ async def services_text() -> str:
         items = list(await s.scalars(select(Service).order_by(Service.id)))
     return (
         "\n".join(
-            f"{x.id}. {x.name} — {x.price} ₸, {x.duration_min} min{'' if x.active else ' (hidden)'}"
+            f"{x.id}. {x.name} — {money('en', x.price)}, {x.duration_min} min"
+            + ("" if x.active else " (hidden)")
             for x in items
         )
         or "No services"

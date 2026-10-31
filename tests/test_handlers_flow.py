@@ -134,3 +134,51 @@ async def test_foreign_booking_cannot_be_cancelled(env, sm):
     await dp.feed_update(bot, cb(f"bk:cancel:{other.id}"))
     async with sm() as s:
         assert (await s.get(Booking, other.id)).status == "active"
+
+
+async def test_typed_phone_and_leaving_phone_step(env, sm):
+    dp, bot, api = env
+
+    async def send(update):
+        api.calls.clear()
+        await dp.feed_update(bot, update)
+        return [c for c in api.calls if hasattr(c, "reply_markup")]
+
+    async def reach_phone_step():
+        await send(msg("/start"))
+        await send(cb("lang:en"))
+        await send(cb("menu:book"))
+        await send(cb("svc:1"))
+        out = await send(cb("mst:0"))
+        out = await send(cb(next(b for b in buttons(out[-1]) if b.startswith("day:"))))
+        await send(cb(next(b for b in buttons(out[-1]) if b.startswith("tm:"))))
+        out = await send(cb("ok"))
+        assert out[0].reply_markup is None  # confirm buttons removed, no double confirm
+        assert out[-1].reply_markup.keyboard[0][0].request_contact
+
+    await reach_phone_step()
+    out = await send(msg("/start"))  # leaving the phone step hides the contact keyboard
+    assert type(out[0].reply_markup).__name__ == "ReplyKeyboardRemove"
+
+    await reach_phone_step()
+    out = await send(msg("hello"))
+    assert out[-1].reply_markup.keyboard[0][0].request_contact  # not a phone -> asked again
+    await send(msg("8 (777) 123-45-67"))
+    async with sm() as s:
+        booking = await s.get(Booking, 1)
+    assert booking.user.phone == "+77771234567" and booking.status == "active"
+
+
+@pytest.mark.parametrize(
+    ("raw", "phone"),
+    [
+        ("8 777 123 45 67", "+77771234567"),
+        ("+7 (777) 123-45-67", "+77771234567"),
+        ("77771234567", "+77771234567"),
+        ("+1 415 555 0100", "+14155550100"),
+        ("12345", None),
+        ("hello", None),
+    ],
+)
+def test_normalize_phone(raw, phone):
+    assert client.normalize_phone(raw) == phone
