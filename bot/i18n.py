@@ -4,8 +4,8 @@ from pathlib import Path
 import yaml
 
 LOCALES = Path(__file__).parent / "locales"
-LANGS = ("ru", "kk", "en")
-DEFAULT = "ru"
+LANGS = ("en", "ru", "kk")
+DEFAULT = "en"
 
 
 @cache

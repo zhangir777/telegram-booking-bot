@@ -55,7 +55,7 @@ class ThrottleMiddleware(BaseMiddleware):
             now = time.monotonic()
             if now - self._last.get(tg_user.id, 0) < self.rate:
                 if isinstance(event, CallbackQuery):
-                    await event.answer(t(data.get("lang", "ru"), "too_fast"))
+                    await event.answer(t(data.get("lang", "en"), "too_fast"))
                 return None  # messages are ignored silently
             self._last[tg_user.id] = now
         return await handler(event, data)

@@ -15,7 +15,7 @@ class User(Base):
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True)  # Telegram user id
     name: Mapped[str] = mapped_column(String(128), default="")
     phone: Mapped[str | None] = mapped_column(String(32))
-    lang: Mapped[str] = mapped_column(String(2), default="ru")
+    lang: Mapped[str] = mapped_column(String(2), default="en")
     created_at: Mapped[datetime] = mapped_column(default=datetime.now)
 
 

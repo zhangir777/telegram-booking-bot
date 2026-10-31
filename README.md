@@ -31,7 +31,7 @@ flowchart LR
 - “My bookings”: cancel or reschedule in one tap
 - Reminders 24 h and 2 h before the visit with “I’ll be there” / “Cancel” buttons
 - Prices, address with map pin, FAQ
-- Russian, Kazakh and English
+- English by default, plus Russian and Kazakh (client picks in /start)
 
 ## What you (the owner) get
 - Instant Telegram notification for every new booking, cancellation and reschedule
@@ -68,7 +68,7 @@ uv run pytest -q              # 34 offline tests, no Telegram needed
 | `bot/services/` | business logic without aiogram: slots, bookings, reminders, export |
 | `bot/handlers/client`, `bot/handlers/admin` | Telegram handlers |
 | `bot/middlewares/` | user language, admin-only access, anti-flood |
-| `bot/locales/*.yaml` | all texts (Russian, Kazakh, English) |
+| `bot/locales/*.yaml` | all texts (English, Russian, Kazakh) |
 | `business.yaml` | name, address, map pin, hours, FAQ — edit per client |
 | `template/` | lightweight FAQ + lead bot for small orders |
 | `deploy/DEPLOY.md` | VPS deploy, auto-restart, daily backups, updates |

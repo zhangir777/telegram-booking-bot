@@ -52,7 +52,7 @@ async def show_menu(target: Message | CallbackQuery, lang: str, text: str | None
 @router.message(CommandStart())
 async def start(message: Message, state: FSMContext):
     await state.clear()
-    await message.answer(t("ru", "choose_lang"), reply_markup=kb.lang_kb())
+    await message.answer(t("en", "choose_lang"), reply_markup=kb.lang_kb())
 
 
 @router.message(Command("menu"))
@@ -82,7 +82,7 @@ async def home(call: CallbackQuery, state: FSMContext, lang: str):
 
 @router.callback_query(MenuCb.filter(F.action == "lang"))
 async def choose_lang(call: CallbackQuery):
-    await call.message.edit_text(t("ru", "choose_lang"), reply_markup=kb.lang_kb())
+    await call.message.edit_text(t("en", "choose_lang"), reply_markup=kb.lang_kb())
     await call.answer()
 
 

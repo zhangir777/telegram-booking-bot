@@ -16,31 +16,31 @@ from bot.services.booking import available_slots
 WEEK = {str(d): ["10:00", "20:00"] for d in range(6)}  # Mon-Sat
 
 MASTERS = [
-    Master(name="Айгерим", names={"en": "Aigerim"},
+    Master(name="Aigerim", names={"ru": "Айгерим", "kk": "Айгерім"},
            schedule=WEEK, break_start="14:00", break_end="15:00"),
-    Master(name="Дана", names={"en": "Dana"},
+    Master(name="Dana", names={"ru": "Дана", "kk": "Дана"},
            schedule={str(d): ["11:00", "20:00"] for d in (1, 2, 3, 4, 5)}),
-    Master(name="Арман (барбер)", names={"en": "Arman (barber)"},
+    Master(name="Arman (barber)", names={"ru": "Арман (барбер)", "kk": "Арман (барбер)"},
            schedule=WEEK, break_start="13:00", break_end="14:00"),
 ]  # fmt: skip
-# names: translations shown to clients by language
+# name: main (English) name, also used in the admin panel; names: translations by language
 SERVICES = [
-    Service(name="Женская стрижка", names={"kk": "Әйелдер шаш қиюы", "en": "Women's haircut"},
+    Service(name="Women's haircut", names={"ru": "Женская стрижка", "kk": "Әйелдер шаш қиюы"},
             price=8000, duration_min=60),
-    Service(name="Мужская стрижка", names={"kk": "Ерлер шаш қиюы", "en": "Men's haircut"},
+    Service(name="Men's haircut", names={"ru": "Мужская стрижка", "kk": "Ерлер шаш қиюы"},
             price=5000, duration_min=45),
-    Service(name="Окрашивание", names={"kk": "Шаш бояу", "en": "Hair coloring"},
+    Service(name="Hair coloring", names={"ru": "Окрашивание", "kk": "Шаш бояу"},
             price=20000, duration_min=120),
-    Service(name="Маникюр", names={"en": "Manicure"}, price=6000, duration_min=60),
-    Service(name="Укладка", names={"kk": "Шаш сәндеу", "en": "Styling"},
+    Service(name="Manicure", names={"ru": "Маникюр", "kk": "Маникюр"}, price=6000, duration_min=60),
+    Service(name="Styling", names={"ru": "Укладка", "kk": "Шаш сәндеу"},
             price=7000, duration_min=45),
-    Service(name="Борода", names={"kk": "Сақал", "en": "Beard trim"},
+    Service(name="Beard trim", names={"ru": "Борода", "kk": "Сақал"},
             price=3000, duration_min=30),
 ]  # fmt: skip
 CLIENTS = [
-    User(id=1001, name="Demo Client 1", phone="+77000000001", lang="ru"),
+    User(id=1001, name="Demo Client 1", phone="+77000000001", lang="en"),
     User(id=1002, name="Demo Client 2", phone="+77000000002", lang="kk"),
-    User(id=1003, name="Demo Client 3", phone="+77000000003", lang="en"),
+    User(id=1003, name="Demo Client 3", phone="+77000000003", lang="ru"),
 ]
 
 

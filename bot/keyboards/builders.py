@@ -16,7 +16,7 @@ from .callbacks import (
     TimeCb,
 )
 
-LANG_NAMES = {"ru": "🇷🇺 Русский", "kk": "🇰🇿 Қазақша", "en": "🇬🇧 English"}
+LANG_NAMES = {"en": "🇬🇧 English", "ru": "🇷🇺 Русский", "kk": "🇰🇿 Қазақша"}
 WEEKDAYS = {
     "ru": ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
     "kk": ["Дс", "Сс", "Ср", "Бс", "Жм", "Сб", "Жс"],
@@ -70,7 +70,7 @@ def calendar_kb(lang: str, today: date, days: int, open_days: set[date]) -> Inli
     for i in range(days):
         d = today + timedelta(days=i)
         if d in open_days:
-            label = f"{WEEKDAYS.get(lang, WEEKDAYS['ru'])[d.weekday()]} {d:%d.%m}"
+            label = f"{WEEKDAYS.get(lang, WEEKDAYS['en'])[d.weekday()]} {d:%d.%m}"
             kb.button(text=label, callback_data=DayCb(day=f"{d:%Y%m%d}"))
     kb.adjust(4)
     back = InlineKeyboardBuilder()
